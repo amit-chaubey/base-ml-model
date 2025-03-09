@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
+from pathlib import Path
 
 def load_and_clean_data():
     # Read the Excel file
-    df = pd.read_excel('../dataset/Practice Question.xlsx')
+    input_path = Path('../dataset/raw/Practice Question.xlsx')
+    df = pd.read_excel(input_path)
     
     # Display initial information about the dataset
     print("Initial Dataset Info:")
@@ -35,6 +37,11 @@ def load_and_clean_data():
 if __name__ == "__main__":
     cleaned_data = load_and_clean_data()
     
+    # Create processed directory if it doesn't exist
+    output_dir = Path('../dataset/processed')
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
     # Save cleaned dataset
-    cleaned_data.to_csv('../dataset/cleaned_data.csv', index=False)
-    print("\nCleaned data saved to cleaned_data.csv")
+    output_path = output_dir / 'cleaned_data.csv'
+    cleaned_data.to_csv(output_path, index=False)
+    print(f"\nCleaned data saved to {output_path}")
